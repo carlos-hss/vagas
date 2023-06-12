@@ -1,15 +1,21 @@
-var data =  require("./fakeData");
+const { data, readCounts } = require("./fakeData");
 
-module.exports = function(req, res) {
-  
-    var name =  req.query.name;
+const deleteUser = (req, res) => {
+  const { name } = req.query;
 
-    for(let i = 0; i < data.length;  i++) {
-        if(i.name == name) {
-            data[i] = null;
-        }
-    }
+  if (!name) return res.status(400).json({ message: "Missing name property" });
 
-    res.send("success");
+  const index = data.findIndex((user) => user.name === name);
+  if (index === -1) {
+    return res.status(404).json({ message: "User not finded" });
+  }
 
+  delete readCounts[data[index].name];
+  data.splice(index, 1);
+
+  res.status(200).json({ message: "User deleted" });
+};
+
+module.exports = {
+  deleteUser,
 };
