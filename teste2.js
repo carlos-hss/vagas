@@ -1,14 +1,19 @@
-let data = require("./fakeData");
+const { data } = require("./fakeData");
 
-module.exports = function (req, res) {
-  let { name, job } = req.body;
+const createUser = (req, res) => {
+  const { name, job, permissions } = req.body;
 
-  let newUser = {
+  const newUser = {
     id: data.length + 1,
     name: name,
     job: job,
+    permissions: permissions || [],
   };
 
   data.push(newUser);
-  res.send(newUser);
+  res.status(200).json({ user: newUser });
+};
+
+module.exports = {
+  createUser,
 };
