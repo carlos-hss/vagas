@@ -1,9 +1,22 @@
+const { data, readCounts } = require("./fakeData");
 
+const countUsers = (req, res) => {
+  const { name } = req.query;
 
-module.exports = function(req, res){
-    
-    var name =  req.query.name;
+  if (!name) return res.status(400).json({ message: "Missing name property" });
 
-    res.send("Usuário " +  name  + "  foi lido 0 vezes.");
+  const hasUserWithThisName = data.some((user) => user.name === name);
 
+  if (!hasUserWithThisName)
+    return res.status(400).json({ message: "No user with this name" });
+
+  res.status(200).json({
+    message: `User ${name} was red ${readCounts[name] || 0} ${
+      readCounts[name] === 1 ? "time" : "times"
+    }.`,
+  });
+};
+
+module.exports = {
+  countUsers,
 };
