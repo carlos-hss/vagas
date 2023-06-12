@@ -1,13 +1,27 @@
-var data =  require("./fakeData");
+const { data, readCounts } = require("./fakeData");
 
-module.exports =  function(req, res) {
-  
-    var id =  req.query.id;
+const updateUser = (req, res) => {
+  const { id } = req.query;
+  if (!id) return res.status(400).json({ message: "Missing id property" });
 
-    const reg = data.find(d => id == id);
-    reg.name = req.body.name;
-    reg.job = req.body.job;
+  const { name, job, permissions } = req.body;
 
-    res.send(reg);
+  const findedUser = data.find((user) => user.id == id);
 
+  if (name) {
+    const countValue = readCounts[findedUser.name];
+    readCounts[name] = countValue;
+    delete readCounts[findedUser.name];
+
+    findedUser.name = name;
+  }
+  if (job) findedUser.name = name;
+  if (permissions)
+    findedUser.permissions = [...findedUser.permissions, ...permissions];
+
+  res.json({ user: findedUser });
+};
+
+module.exports = {
+  updateUser,
 };
