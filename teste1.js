@@ -1,27 +1,30 @@
-let data = require("./fakeData");
+const { data, readCounts } = require("./fakeData");
 
 const getUser = (req, res, next) => {
-  // Eu alteraria para a função fazer a busca por cpf, pelo fato de ser uma chave única, mas deixei o nome pois creio que seja a intenção do código.
-
-  let name = req.query.name;
+  const { name } = req.query;
 
   for (const user of data) {
-    if (user.name == name) {
-      res.send(user);
+    if (user.name === name) {
+      if (!readCounts[name]) {
+        readCounts[name] = 0;
+      }
+      readCounts[name]++;
+
+      res.status(200).json({ user });
       return;
     }
   }
 
-  return res.send("User not founded");
+  res.status(404).json({ message: "User not finded" });
 };
 
 const getUsers = (req, res, next) => {
   if (data.length > 0) {
-    res.send(data);
+    res.status(200).json({ data });
     return;
   }
 
-  return res.send("No users registered");
+  res.status(200).json({ message: "No users registered" });
 };
 
 module.exports = {
