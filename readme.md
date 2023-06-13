@@ -1,6 +1,9 @@
-# Este é um teste para desenvolvedores
+# Este é um teste para desenvolvedores (possui 5 testes)
 
-# possui 5 testes
+# Observações
+- Não utilizei o try o catch pois não senti necessidade, devido ao fato de que não estava havendo uma consulta em um banco real.
+- No teste 5 eu fiz um log, pois entendi que essa era a proposta da demanda.
+- Fiz o Swagger, e o mesmo está na rota api-docs.
 
 ## Introdução
 
