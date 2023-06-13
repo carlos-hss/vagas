@@ -11,7 +11,7 @@ const countUsers = (req, res) => {
     return res.status(400).json({ message: "No user with this name" });
 
   res.status(200).json({
-    message: `User ${name} was red ${readCounts[name] || 0} ${
+    message: `User ${name} was read ${readCounts[name] || 0} ${
       readCounts[name] === 1 ? "time" : "times"
     }.`,
   });

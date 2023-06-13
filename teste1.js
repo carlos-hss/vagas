@@ -15,7 +15,7 @@ const getUser = (req, res, next) => {
     }
   }
 
-  res.status(404).json({ message: "User not finded" });
+  res.status(404).json({ message: "User not found" });
 };
 
 const getUsers = (req, res, next) => {

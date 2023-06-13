@@ -1,0 +1,184 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "User Manipulation",
+    "version": "1.0.0",
+    "description": "API documentation"
+  },
+  "paths": {
+    "/user": {
+      "get": {
+        "summary": "Get user by name",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Get all users",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create user",
+        "consumes": "application/json",
+        "requestBody": {
+          "description": "The user to create.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update user",
+        "consumes": "application/json",
+        "requestBody": {
+          "description": "The user data to update.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "The id of the user.",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "permissions",
+            "description": "The permission of the user.",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Missing id property"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user",
+        "consumes": "application/json",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "The name of the user.",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "permissions",
+            "description": "The permission of the user.",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Missing id property"
+          }
+        }
+      }
+    },
+    "/users/access": {
+      "get": {
+        "summary": "Get how much times a user was read",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "The name of the user.",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "job": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

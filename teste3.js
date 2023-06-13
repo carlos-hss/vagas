@@ -7,7 +7,7 @@ const deleteUser = (req, res) => {
 
   const index = data.findIndex((user) => user.name === name);
   if (index === -1) {
-    return res.status(404).json({ message: "User not finded" });
+    return res.status(404).json({ message: "User not found" });
   }
 
   delete readCounts[data[index].name];

@@ -6,20 +6,22 @@ const updateUser = (req, res) => {
 
   const { name, job, permissions } = req.body;
 
-  const findedUser = data.find((user) => user.id == id);
+  const foundUser = data.find((user) => user.id == id);
 
   if (name) {
-    const countValue = readCounts[findedUser.name];
+    const countValue = readCounts[foundUser.name];
     readCounts[name] = countValue;
-    delete readCounts[findedUser.name];
+    delete readCounts[foundUser.name];
 
-    findedUser.name = name;
+    foundUser.name = name;
   }
-  if (job) findedUser.name = name;
-  if (permissions)
-    findedUser.permissions = [...findedUser.permissions, ...permissions];
+  if (job) foundUser.job = job;
+  foundUser.permissions =
+    permissions && permissions.length > 0
+      ? [...foundUser.permissions, ...permissions]
+      : [];
 
-  res.json({ user: findedUser });
+  res.status(00).json({ user: foundUser });
 };
 
 module.exports = {

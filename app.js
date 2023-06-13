@@ -1,5 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const swaggerUI = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
+
 const app = express();
 
 const teste1 = require("./teste1");
@@ -28,6 +31,7 @@ app.get("/", function (req, res) {
   `);
 });
 
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.get("/user", teste1.getUser);
 app.get("/users", teste1.getUsers);
 app.post("/users", teste2.createUser);
